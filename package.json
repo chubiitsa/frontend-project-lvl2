@@ -1,0 +1,31 @@
+{
+  "name": "frontend-project-lvl2",
+  "version": "1.0.0",
+  "description": "gendiff 1.0",
+  "main": "src/index.js",
+  "bin": {
+    "gendiff": "bin/gendiff.js"
+  },
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chubiitsa/frontend-project-lvl2.git"
+  },
+  "type": "module",
+  "author": "Anna Kazakova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chubiitsa/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/chubiitsa/frontend-project-lvl2#readme",
+  "dependencies": {
+    "commander": "^5.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.21.2"
+  }
+}
