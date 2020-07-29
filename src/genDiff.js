@@ -26,8 +26,6 @@ const genDiff = (path1, path2) => {
     return `{\n${keys1.concat(keys2).join('')}}`;
   };
 
-  console.log(compareKeys(file1, file2));
-
   return compareKeys(file1, file2);
 };
 
@@ -40,4 +38,4 @@ program
   .arguments('<filepath1> <filepath2>')
   .action(genDiff);
 
-export default program;
+export { program, genDiff };

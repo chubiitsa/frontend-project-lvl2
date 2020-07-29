@@ -7,7 +7,11 @@
     "gendiff": "bin/gendiff.js"
   },
   "scripts": {
-    "test": "test"
+    "test": "npx -n --experimental-vm-modules jest"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
   },
   "repository": {
     "type": "git",
@@ -21,12 +25,19 @@
   },
   "homepage": "https://github.com/chubiitsa/frontend-project-lvl2#readme",
   "dependencies": {
+    "@jest/globals": "^26.1.0",
     "commander": "^5.1.0",
-    "file-system": "^2.2.2"
+    "file-system": "^2.2.2",
+    "path": "^0.12.7",
+    "url": "^0.11.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.10.4",
+    "babel-jest": "^26.1.0",
     "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.21.2"
+    "eslint-plugin-import": "^2.21.2",
+    "jest": "^26.1.0"
   }
 }
