@@ -28,6 +28,7 @@
     "@jest/globals": "^26.1.0",
     "commander": "^5.1.0",
     "file-system": "^2.2.2",
+    "ini": "^1.3.5",
     "js-yaml": "^3.14.0",
     "path": "^0.12.7",
     "url": "^0.11.0"

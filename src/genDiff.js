@@ -4,10 +4,10 @@ import fs from 'fs';
 import parsers from './parsers.js';
 
 const genDiff = (path1, path2) => {
-  const fileType = path.extname(path1);
-  const parse = parsers(fileType);
-  const file1 = parse(fs.readFileSync(path1));
-  const file2 = parse(fs.readFileSync(path2));
+  const parse1 = parsers(path.extname(path1));
+  const parse2 = parsers(path.extname(path2));
+  const file1 = parse1(fs.readFileSync(path1, 'utf-8'));
+  const file2 = parse2(fs.readFileSync(path2, 'utf-8'));
 
   const compareKeys = (obj1, obj2) => {
     const keys1 = Object.keys(obj1).map((key) => {

@@ -9,5 +9,8 @@
 The program returns the string that shows differences:
 [![asciicast](https://asciinema.org/a/FsQv1a3Oj0yF0po2NqXO49geW.svg)](https://asciinema.org/a/FsQv1a3Oj0yF0po2NqXO49geW)
 
-Using this program you can compare config-files of different formats (.json or .yml):
+The program may compare config-files of following formats: .json, .yml, .ini
 [![asciicast](https://asciinema.org/a/OrlIBIS37RYhfspouvkYikp4W.svg)](https://asciinema.org/a/OrlIBIS37RYhfspouvkYikp4W)
+
+With this package you can even compare files of different formats (for example .yaml & .ini):
+[![asciicast](https://asciinema.org/a/htReeN7Soqe64W9N0rJu1e0SL.svg)](https://asciinema.org/a/htReeN7Soqe64W9N0rJu1e0SL)
