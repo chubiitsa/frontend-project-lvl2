@@ -17,3 +17,6 @@ With this package you can even compare files of different formats (for example .
 
 This programs successfully deals with nested files & make recursive comparison:
 [![asciicast](https://asciinema.org/a/amXlLV5UEBtacE2NB4hmpWlsr.svg)](https://asciinema.org/a/amXlLV5UEBtacE2NB4hmpWlsr)
+
+Using option -f (--format [type]), you can see output in different formats. Available styles are plain & stylish (which is default option), please find examples below:
+[![asciicast](https://asciinema.org/a/uMwMTUq4QGHnfkkLmSUogE429.svg)](https://asciinema.org/a/uMwMTUq4QGHnfkkLmSUogE429)

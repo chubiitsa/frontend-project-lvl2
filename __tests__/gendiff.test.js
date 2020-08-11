@@ -87,8 +87,24 @@ test.each([
   + '  + parserOptions: 11\n'
   + '  + rules: no-console\n'
   + '}'],
-])('compare (%s, %s)', (a, b, expected) => {
-  expect(genDiff(getFixturePath(a), getFixturePath(b))).toBe(expected);
+])('compare with stylish format (%s, %s)', (a, b, expected) => {
+  expect(genDiff(getFixturePath(a), getFixturePath(b), 'stylish')).toBe(expected);
+});
+
+test.each([
+  ['nested1.json', 'nested2.json', 'Property \'common.setting2\' was removed\n'
+  + 'Property \'common.setting3\' was updated. From true to [complex value]\n'
+  + 'Property \'common.setting6.doge.wow\' was updated. From \'too much\' to \'so much\'\n'
+  + 'Property \'common.setting6.ops\' was added with value: \'vops\'\n'
+  + 'Property \'common.follow\' was added with value: false\n'
+  + 'Property \'common.setting4\' was added with value: \'blah blah\'\n'
+  + 'Property \'common.setting5\' was added with value: [complex value]\n'
+  + 'Property \'group1.baz\' was updated. From \'bas\' to \'bars\'\n'
+  + 'Property \'group1.nest\' was updated. From [complex value] to \'str\'\n'
+  + 'Property \'group2\' was removed\n'
+  + 'Property \'group3\' was added with value: [complex value]'],
+])('compare with plain format (%s, %s)', (a, b, expected) => {
+  expect(genDiff(getFixturePath(a), getFixturePath(b), 'plain')).toBe(expected);
 });
 
 // const path1 = getFixturePath('nested1.ini');
