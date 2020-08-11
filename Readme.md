@@ -14,3 +14,6 @@ The program may compare config-files of following formats: .json, .yml, .ini
 
 With this package you can even compare files of different formats (for example .yaml & .ini):
 [![asciicast](https://asciinema.org/a/htReeN7Soqe64W9N0rJu1e0SL.svg)](https://asciinema.org/a/htReeN7Soqe64W9N0rJu1e0SL)
+
+This programs successfully deals with nested files & make recursive comparison:
+[![asciicast](https://asciinema.org/a/amXlLV5UEBtacE2NB4hmpWlsr.svg)](https://asciinema.org/a/amXlLV5UEBtacE2NB4hmpWlsr)
