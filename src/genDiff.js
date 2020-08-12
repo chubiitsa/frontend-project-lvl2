@@ -12,9 +12,16 @@ const diff = (obj1, obj2) => {
       result[key].oldValue = obj1[key];
       result[key].status = 'deleted';
     } else if (typeof obj1[key] !== 'object' || typeof obj2[key] !== 'object') {
-      result[key].oldValue = obj1[key];
-      result[key].newValue = obj2[key];
-      result[key].status = obj1[key] === obj2[key] ? 'same' : 'changed';
+      const areEqual = obj1[key].toString() === obj2[key].toString();
+      const oneIsNumber = typeof obj1[key] === 'number' || typeof obj2[key] === 'number';
+      if (areEqual && oneIsNumber) {
+        result[key].oldValue = parseInt(obj1[key], 10);
+        result[key].newValue = parseInt(obj2[key], 10);
+      } else {
+        result[key].oldValue = obj1[key];
+        result[key].newValue = obj2[key];
+      }
+      result[key].status = obj1[key].toString() === obj2[key].toString() ? 'same' : 'changed';
     } else {
       result[key].children = diff(obj1[key], obj2[key]);
     }
@@ -36,7 +43,7 @@ const genDiff = (path1, path2, format = 'plain') => {
   const file1 = parse1(fs.readFileSync(path1, 'utf-8'));
   const file2 = parse2(fs.readFileSync(path2, 'utf-8'));
   const formatter = getFormatter(format);
-  console.log(formatter(diff(file1, file2)));
+  // console.log(formatter(diff(file1, file2)));
   return formatter(diff(file1, file2));
 };
 

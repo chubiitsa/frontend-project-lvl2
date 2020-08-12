@@ -12,7 +12,7 @@ const drawObject = (obj, times = 0) => {
 
 const stylish = (diff, times = 2) => {
   const parts = [];
-  const tab = ' ';
+  const intend = ' '.repeat(times);
   Object.keys(diff).forEach((key) => {
     if (!diff[key].children) {
       const oldValue = (typeof diff[key].oldValue === 'object') ? drawObject(diff[key].oldValue, times + 4) : diff[key].oldValue;
@@ -20,23 +20,23 @@ const stylish = (diff, times = 2) => {
       const { status } = diff[key];
 
       if (status === 'same') {
-        parts.push(`${tab.repeat(times)}  ${key}: ${oldValue}`);
+        parts.push(`${intend}  ${key}: ${oldValue}`);
       }
       if (status === 'deleted') {
-        parts.push(`${tab.repeat(times)}- ${key}: ${oldValue}`);
+        parts.push(`${intend}- ${key}: ${oldValue}`);
       }
       if (status === 'added') {
-        parts.push(`${tab.repeat(times)}+ ${key}: ${newValue}`);
+        parts.push(`${intend}+ ${key}: ${newValue}`);
       }
       if (status === 'changed') {
-        parts.push(`${tab.repeat(times)}- ${key}: ${oldValue}`);
-        parts.push(`${tab.repeat(times)}+ ${key}: ${newValue}`);
+        parts.push(`${intend}- ${key}: ${oldValue}`);
+        parts.push(`${intend}+ ${key}: ${newValue}`);
       }
     } else {
-      parts.push(`${tab.repeat(times)}  ${key}: ${stylish(diff[key].children, times + 4)}`);
+      parts.push(`${intend}  ${key}: ${stylish(diff[key].children, times + 4)}`);
     }
   });
-  return `{\n${parts.join('\n')}\n${tab.repeat(times - 2)}}`;
+  return `{\n${parts.join('\n')}\n${' '.repeat(times - 2)}}`;
 };
 
 export default stylish;

@@ -1,51 +1,38 @@
-const plain = (diff, i = '') => {
-  const parts = [];
-  Object.keys(diff).forEach((key) => {
-    let property = `${i}${key}`;
-    if (!diff[key].children) {
-      const oldValueType = typeof diff[key].oldValue;
-      let oldValue;
-      switch (oldValueType) {
-        case 'boolean':
-          oldValue = diff[key].oldValue;
-          break;
-        case 'object':
-          oldValue = '[complex value]';
-          break;
-        default:
-          oldValue = `'${diff[key].oldValue}'`;
-      }
-
-      const newValueType = typeof diff[key].newValue;
-      let newValue;
-      switch (newValueType) {
-        case 'boolean':
-          newValue = diff[key].newValue;
-          break;
-        case 'object':
-          newValue = '[complex value]';
-          break;
-        default:
-          newValue = `'${diff[key].newValue}'`;
-      }
-
-      const { status } = diff[key];
-
-      if (status === 'deleted') {
-        parts.push(`Property '${property}' was removed`);
-      }
-      if (status === 'added') {
-        parts.push(`Property '${property}' was added with value: ${newValue}`);
-      }
-      if (status === 'changed') {
-        parts.push(`Property '${property}' was updated. From ${oldValue} to ${newValue}`);
-      }
-    } else {
-      property += '.';
-      parts.push(plain(diff[key].children, property));
-    }
-  });
-  return `${parts.join('\n')}`;
+const defineOutputByType = (value) => {
+  const valueType = typeof value;
+  switch (valueType) {
+    case 'boolean':
+      return value;
+    case 'object':
+      return '[complex value]';
+    default:
+      return `'${value}'`;
+  }
 };
+
+const plain = (diff, i = '') => Object.keys(diff).reduce((acc, key) => {
+  const parts = acc;
+  const property = !diff[key].children ? `${i}${key}` : `${i}${key}.`;
+  if (!diff[key].children) {
+    const oldValue = defineOutputByType(diff[key].oldValue);
+    const newValue = defineOutputByType(diff[key].newValue);
+    switch (diff[key].status) {
+      case 'deleted':
+        parts.push(`Property '${property}' was removed`);
+        break;
+      case 'added':
+        parts.push(`Property '${property}' was added with value: ${newValue}`);
+        break;
+      case 'changed':
+        parts.push(`Property '${property}' was updated. From ${oldValue} to ${newValue}`);
+        break;
+      default:
+        return parts;
+    }
+  } else {
+    parts.push(plain(diff[key].children, property));
+  }
+  return parts;
+}, []).join('\n');
 
 export default plain;

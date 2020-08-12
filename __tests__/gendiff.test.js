@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
 test.each([
-  ['nested1.json', 'nested2.json', '{\n'
+  ['nested_before.json', 'nested_after.json', '{\n'
     + '    common: {\n'
     + '        setting1: Value 1\n'
     + '      - setting2: 200\n'
@@ -57,14 +57,6 @@ test.each([
     + '        }\n'
     + '    }\n'
     + '}'],
-  ['flat1.json', 'flat2.json', '{\n'
-    + '    host: hexlet.io\n'
-    + '  - timeout: 50\n'
-    + '  + timeout: 20\n'
-    + '  - proxy: 123.234.53.22\n'
-    + '  - follow: false\n'
-    + '  + verbose: true\n'
-    + '}'],
   ['yml1.yml', 'yml2.yml', '{\n'
     + '    env: true\n'
     + '  - parserOptions: 11\n'
@@ -73,14 +65,21 @@ test.each([
     + '  + rules: import/extensions\n'
     + '  + extends: airbnb-base\n'
     + '}'],
-  ['ini1.ini', 'ini2.ini', '{\n'
-  + '    env: true\n'
-  + '  - user: agent\n'
-  + '  + user: dbuser\n'
-  + '  - password: dbpassword\n'
-  + '  + name: dan\n'
+  ['flat.json', 'nested.ini', '{\n'
+  + '  - host: hexlet.io\n'
+  + '  - timeout: 50\n'
+  + '  - proxy: 123.234.53.22\n'
+  + '  - follow: false\n'
+  + '    id: 33\n'
+  + '  + first: {\n'
+  + '        second: {\n'
+  + '            env: true\n'
+  + '            user: dbuser\n'
+  + '            name: dan\n'
+  + '        }\n'
+  + '    }\n'
   + '}'],
-  ['ini1.ini', 'yml1.yml', '{\n'
+  ['flat.ini', 'yml1.yml', '{\n'
   + '    env: true\n'
   + '  - user: agent\n'
   + '  - password: dbpassword\n'
@@ -92,7 +91,7 @@ test.each([
 });
 
 test.each([
-  ['nested1.json', 'nested2.json', 'Property \'common.setting2\' was removed\n'
+  ['nested_before.json', 'nested_after.json', 'Property \'common.setting2\' was removed\n'
   + 'Property \'common.setting3\' was updated. From true to [complex value]\n'
   + 'Property \'common.setting6.doge.wow\' was updated. From \'too much\' to \'so much\'\n'
   + 'Property \'common.setting6.ops\' was added with value: \'vops\'\n'
@@ -107,7 +106,8 @@ test.each([
   expect(genDiff(getFixturePath(a), getFixturePath(b), 'plain')).toBe(expected);
 });
 
-// const path1 = getFixturePath('nested1.ini');
-// const path2 = getFixturePath('nested2.ini');
-// const diff = genDiff(path1, path2);
-// // console.log(diff);
+test.each([
+  ['flat.json', 'nested.ini', '{"host":{"oldValue":"hexlet.io","status":"deleted"},"timeout":{"oldValue":50,"status":"deleted"},"proxy":{"oldValue":"123.234.53.22","status":"deleted"},"follow":{"oldValue":false,"status":"deleted"},"id":{"oldValue":33,"newValue":33,"status":"same"},"first":{"newValue":{"second":{"env":true,"user":"dbuser","name":"dan"}},"status":"added"}}'],
+])('compare with json format (%s, %s)', (a, b, expected) => {
+  expect(genDiff(getFixturePath(a), getFixturePath(b), 'json')).toBe(expected);
+});
