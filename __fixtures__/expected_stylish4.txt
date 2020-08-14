@@ -1,0 +1,7 @@
+{
+    env: true
+  - user: agent
+  - password: dbpassword
+  + parserOptions: 11
+  + rules: no-console
+}

@@ -1,0 +1,1 @@
+{"host":{"oldValue":"hexlet.io","status":"deleted"},"timeout":{"oldValue":50,"status":"deleted"},"proxy":{"oldValue":"123.234.53.22","status":"deleted"},"follow":{"oldValue":false,"status":"deleted"},"id":{"oldValue":33,"newValue":33,"status":"same"},"first":{"newValue":{"second":{"env":true,"user":"dbuser","name":"dan"}},"status":"added"}}

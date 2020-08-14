@@ -10,7 +10,7 @@ const drawObject = (obj, times = 0) => {
   }, []).join('\n')}\n${tab.repeat(times - 2)}}`;
 };
 
-const stylish = (diff, times = 2) => {
+const formatStylish = (diff, times = 2) => {
   const parts = [];
   const intend = ' '.repeat(times);
   Object.keys(diff).forEach((key) => {
@@ -33,10 +33,10 @@ const stylish = (diff, times = 2) => {
         parts.push(`${intend}+ ${key}: ${newValue}`);
       }
     } else {
-      parts.push(`${intend}  ${key}: ${stylish(diff[key].children, times + 4)}`);
+      parts.push(`${intend}  ${key}: ${formatStylish(diff[key].children, times + 4)}`);
     }
   });
   return `{\n${parts.join('\n')}\n${' '.repeat(times - 2)}}`;
 };
 
-export default stylish;
+export default formatStylish;

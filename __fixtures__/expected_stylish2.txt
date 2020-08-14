@@ -1,0 +1,8 @@
+{
+    env: true
+  - parserOptions: 11
+  + parserOptions: module
+  - rules: no-console
+  + rules: import/extensions
+  + extends: airbnb-base
+}

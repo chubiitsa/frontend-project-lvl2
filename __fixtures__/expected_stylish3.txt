@@ -1,0 +1,14 @@
+{
+  - host: hexlet.io
+  - timeout: 50
+  - proxy: 123.234.53.22
+  - follow: false
+    id: 33
+  + first: {
+        second: {
+            env: true
+            user: dbuser
+            name: dan
+        }
+    }
+}
