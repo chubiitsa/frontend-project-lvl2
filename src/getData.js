@@ -1,11 +1,15 @@
 import path from 'path';
 import fs from 'fs';
-import getParser from './getParser';
+import getParser from './getParser.js';
 
-const getData = (address) => {
-  const fileType = path.extname(address);
-  const parser = getParser(fileType);
-  return parser(fs.readFileSync(address, 'utf-8'));
+const readFile = (name) => fs.readFileSync(name, 'utf-8');
+const getType = (name) => path.extname(name);
+
+const getData = (pathToFile) => {
+  const dataType = getType(pathToFile);
+  const parse = getParser(dataType);
+  const data = readFile(pathToFile);
+  return parse(data);
 };
 
 export default getData;

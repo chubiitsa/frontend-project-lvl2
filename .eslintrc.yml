@@ -1,11 +1,23 @@
 env:
-  browser: true
-  es2020: true
+  jest: true
+  node: true
+plugins:
+  - jest
+  - fp
 extends:
   - airbnb-base
 parserOptions:
-  ecmaVersion: 11
+  ecmaVersion: 2020
   sourceType: module
 rules:
   no-console: 0
   import/extensions: 0
+  no-underscore-dangle: 0
+  fp/no-nil: 0
+  fp/no-unused-expression: 0
+  fp/no-throw: 0
+  fp/no-mutating-methods:
+    - error
+    - allowedObjects:
+        - "_"
+

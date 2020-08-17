@@ -1,0 +1,6 @@
+env:
+  jest: true
+  node: false
+  browser: true
+parserOptions: 11
+rules: no-console

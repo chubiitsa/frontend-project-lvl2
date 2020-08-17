@@ -1,8 +1,19 @@
 {
-    env: true
+    env: {
+        jest: true
+      - node: false
+      + node: true
+      - browser: true
+    }
   - parserOptions: 11
-  + parserOptions: module
+  + parserOptions: {
+        ecmaVersion: 11
+        sourceType: module
+    }
   - rules: no-console
-  + rules: import/extensions
-  + extends: airbnb-base
+  + rules: {
+        no-console: 0
+        import/extensions: 0
+        no-underscore-dangle: 0
+    }
 }

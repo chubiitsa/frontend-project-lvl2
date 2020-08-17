@@ -36,6 +36,7 @@
         }
     }
   + group3: {
+        human: true
         fee: 100500
         deep: {
             id: {
