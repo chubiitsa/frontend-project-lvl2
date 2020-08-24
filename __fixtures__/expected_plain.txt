@@ -1,5 +1,5 @@
-Property 'group3.human' was updated. From false to true
-Property 'group3.deep.id.number' was updated. From '46' to '45'
-Property 'first' was removed
 Property 'common' was added with value: [complex value]
+Property 'first' was removed
 Property 'group1' was added with value: [complex value]
+Property 'group3.deep.id.number' was updated. From '46' to '45'
+Property 'group3.human' was updated. From false to true

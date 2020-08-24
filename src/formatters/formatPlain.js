@@ -1,4 +1,4 @@
-const getOutputByType = (value) => {
+const stringify = (value) => {
   const valueType = typeof value;
   switch (valueType) {
     case 'boolean':
@@ -23,15 +23,18 @@ const generateMessage = (status, property, oldValue, newValue) => {
   }
 };
 
-const formatPlain = (diff, i = '') => Object.keys(diff).flatMap((key) => {
+const plain = (diff, i = '') => Object.keys(diff).flatMap((key) => {
   const property = !diff[key].children ? `${i}${key}` : `${i}${key}.`;
-  if (!diff[key].children) {
-    const oldValue = getOutputByType(diff[key].oldValue);
-    const newValue = getOutputByType(diff[key].newValue);
+  const hasChildren = diff[key].status === 'nested';
+  if (!hasChildren) {
+    const oldValue = stringify(diff[key].oldValue);
+    const newValue = stringify(diff[key].newValue);
     const { status } = diff[key];
     return generateMessage(status, property, oldValue, newValue);
   }
-  return formatPlain(diff[key].children, property);
+  return plain(diff[key].children, property);
 }).join('\n');
+
+const formatPlain = (diff) => plain(diff, '');
 
 export default formatPlain;
