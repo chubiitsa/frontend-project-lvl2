@@ -11,38 +11,38 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const readFile = (name) => fs.readFileSync(name, 'utf-8');
 
 describe('diff', () => {
-  let expected1;
-  let expected2;
-  let expected4;
-  let expected5;
+  let expectedStylish1;
+  let expectedStylish2;
+  let expectedPlain;
+  let expectedJson;
   beforeAll(() => {
-    expected1 = readFile(getFixturePath('expected_stylish.txt'));
-    expected2 = readFile(getFixturePath('expected_stylish2.txt'));
-    expected4 = readFile(getFixturePath('expected_plain.txt'));
-    expected5 = readFile(getFixturePath('expected_json.json'));
+    expectedStylish1 = readFile(getFixturePath('expected_stylish.txt'));
+    expectedStylish2 = readFile(getFixturePath('expected_stylish2.txt'));
+    expectedPlain = readFile(getFixturePath('expected_plain.txt'));
+    expectedJson = readFile(getFixturePath('expected_json.json'));
   });
 
   test.each([
     ['before.json', 'after.json'],
   ])('stylish format: %s, %s', (a, b) => {
-    expect(genDiff(getFixturePath(a), getFixturePath(b), 'stylish')).toBe(expected1);
+    expect(genDiff(getFixturePath(a), getFixturePath(b), 'stylish')).toBe(expectedStylish1);
   });
 
   test.each([
     ['before.yml', 'after.yaml'],
   ])('stylish format: %s, %s', (a, b) => {
-    expect(genDiff(getFixturePath(a), getFixturePath(b), 'stylish')).toBe(expected2);
+    expect(genDiff(getFixturePath(a), getFixturePath(b), 'stylish')).toBe(expectedStylish2);
   });
 
   test.each([
     ['before.ini', 'after.json'],
   ])('plain format: %s, %s', (a, b) => {
-    expect(genDiff(getFixturePath(a), getFixturePath(b), 'plain')).toBe(expected4);
+    expect(genDiff(getFixturePath(a), getFixturePath(b), 'plain')).toBe(expectedPlain);
   });
 
   test.each([
     ['before.ini', 'after.json'],
   ])('json format: %s, %s', (a, b) => {
-    expect(genDiff(getFixturePath(a), getFixturePath(b), 'json')).toBe(expected5);
+    expect(genDiff(getFixturePath(a), getFixturePath(b), 'json')).toBe(expectedJson);
   });
 });
