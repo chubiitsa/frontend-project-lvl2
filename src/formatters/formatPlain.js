@@ -11,9 +11,9 @@ const stringify = (value) => {
 };
 
 const formatPlain = (keys) => {
-  const iter = (array, startMessage = '') => array.flatMap((item) => {
+  const iter = (array, ancestry = '') => array.flatMap((item) => {
     const key = Object.keys(item);
-    let property = `${startMessage}${key}`;
+    const property = `${ancestry}${key}`;
     const oldValue = stringify(item[key].oldValue);
     const newValue = stringify(item[key].newValue);
     const { type, children } = item[key];
@@ -25,8 +25,7 @@ const formatPlain = (keys) => {
       case 'changed':
         return `Property '${property}' was updated. From ${oldValue} to ${newValue}`;
       case 'nested':
-        property += '.';
-        return iter(children, property);
+        return iter(children, `${property}.`);
       default:
         return [];
     }

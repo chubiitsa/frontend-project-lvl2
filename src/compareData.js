@@ -4,27 +4,20 @@ const compareData = (before, after) => {
   const keys = _.union(Object.keys(before), Object.keys(after));
   const sortedKeys = _.sortBy(keys);
   return sortedKeys.map((key) => {
-    const result = {};
-    result[key] = {};
     if (!_.has(before, key)) {
-      result[key].newValue = after[key];
-      result[key].type = 'added';
+      return { [key]: { type: 'added', newValue: after[key] } };
     }
     if (!_.has(after, key)) {
-      result[key].oldValue = before[key];
-      result[key].type = 'deleted';
+      return { [key]: { type: 'deleted', oldValue: before[key] } };
     }
     if (_.has(before, key) && _.has(after, key)) {
       if (!_.isObject(before[key]) || !_.isObject(after[key])) {
-        result[key].oldValue = before[key];
-        result[key].newValue = after[key];
-        result[key].type = before[key] === after[key] ? 'unchanged' : 'changed';
-      } else {
-        result[key].type = 'nested';
-        result[key].children = compareData(before[key], after[key]);
+        const type = before[key] === after[key] ? 'unchanged' : 'changed';
+        return { [key]: { type, oldValue: before[key], newValue: after[key] } };
       }
+      const children = compareData(before[key], after[key]);
+      return { [key]: { type: 'nested', children } };
     }
-    return result;
   });
 };
 

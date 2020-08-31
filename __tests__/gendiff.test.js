@@ -11,37 +11,38 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 const readFile = (name) => fs.readFileSync(name, 'utf-8');
 
 describe('diff', () => {
-  let expectedStylish1;
-  let expectedStylish2;
+  let expectedStylish;
   let expectedPlain;
   let expectedJson;
   beforeAll(() => {
-    expectedStylish1 = readFile(getFixturePath('expected_stylish.txt'));
-    expectedStylish2 = readFile(getFixturePath('expected_stylish2.txt'));
+    expectedStylish = readFile(getFixturePath('expected_stylish.txt'));
     expectedPlain = readFile(getFixturePath('expected_plain.txt'));
     expectedJson = readFile(getFixturePath('expected_json.json'));
   });
 
   test.each([
-    ['before.json', 'after.json'],
+    ['before.json', 'after.json', expectedStylish],
+    ['before.ini', 'after.ini', expectedStylish],
+    ['before.yml', 'after.yaml', expectedStylish],
+    ['before.ini', 'after.json', expectedStylish],
   ])('stylish format: %s, %s', (a, b) => {
-    expect(genDiff(getFixturePath(a), getFixturePath(b), 'stylish')).toBe(expectedStylish1);
+    expect(genDiff(getFixturePath(a), getFixturePath(b), 'stylish')).toBe(expectedStylish);
   });
 
   test.each([
-    ['before.yml', 'after.yaml'],
-  ])('stylish format: %s, %s', (a, b) => {
-    expect(genDiff(getFixturePath(a), getFixturePath(b), 'stylish')).toBe(expectedStylish2);
-  });
-
-  test.each([
-    ['before.ini', 'after.json'],
+    ['before.json', 'after.json', expectedPlain],
+    ['before.ini', 'after.ini', expectedPlain],
+    ['before.yml', 'after.yaml', expectedPlain],
+    ['before.ini', 'after.json', expectedPlain],
   ])('plain format: %s, %s', (a, b) => {
     expect(genDiff(getFixturePath(a), getFixturePath(b), 'plain')).toBe(expectedPlain);
   });
 
   test.each([
-    ['before.ini', 'after.json'],
+    ['before.json', 'after.json', expectedJson],
+    ['before.ini', 'after.ini', expectedJson],
+    ['before.yml', 'after.yaml', expectedJson],
+    ['before.ini', 'after.json', expectedJson],
   ])('json format: %s, %s', (a, b) => {
     expect(genDiff(getFixturePath(a), getFixturePath(b), 'json')).toBe(expectedJson);
   });

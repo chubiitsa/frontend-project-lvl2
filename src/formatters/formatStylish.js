@@ -25,20 +25,18 @@ const formatStylish = (keys) => {
       const oldValue = (typeof item[key].oldValue === 'object') ? stringify(item[key].oldValue, depth + 1) : item[key].oldValue;
       const newValue = (typeof item[key].newValue === 'object') ? stringify(item[key].newValue, depth + 1) : item[key].newValue;
 
-      let stringToAdd;
       if (type === 'unchanged') {
-        stringToAdd = `${indent}  ${key}: ${oldValue}`;
+        return `${indent}  ${key}: ${oldValue}`;
       }
       if (type === 'deleted') {
-        stringToAdd = `${indent}- ${key}: ${oldValue}`;
+        return `${indent}- ${key}: ${oldValue}`;
       }
       if (type === 'added') {
-        stringToAdd = `${indent}+ ${key}: ${newValue}`;
+        return `${indent}+ ${key}: ${newValue}`;
       }
       if (type === 'changed') {
-        stringToAdd = `${indent}- ${key}: ${oldValue}\n${indent}+ ${key}: ${newValue}`;
+        return `${indent}- ${key}: ${oldValue}\n${indent}+ ${key}: ${newValue}`;
       }
-      return stringToAdd;
     });
     return `{\n${parts.join('\n')}\n${endIndent}}`;
   };
