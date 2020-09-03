@@ -10,27 +10,28 @@ const stringify = (value) => {
   }
 };
 
-const formatPlain = (keys) => {
-  const iter = (array, ancestry = '') => array.flatMap((item) => {
-    const key = Object.keys(item);
-    const property = `${ancestry}${key}`;
-    const oldValue = stringify(item[key].oldValue);
-    const newValue = stringify(item[key].newValue);
-    const { type, children } = item[key];
+const formatPlain = (tree) => {
+  const iter = (subtree, ancestry = '') => subtree.flatMap((node) => {
+    const { key, type, children } = node;
+    const oldValue = stringify(node.oldValue);
+    const newValue = stringify(node.newValue);
+    const newAncestry = `${ancestry}${key}`;
     switch (type) {
-      case 'deleted':
-        return `Property '${property}' was removed`;
-      case 'added':
-        return `Property '${property}' was added with value: ${newValue}`;
-      case 'changed':
-        return `Property '${property}' was updated. From ${oldValue} to ${newValue}`;
       case 'nested':
-        return iter(children, `${property}.`);
-      default:
+        return iter(children, `${newAncestry}.`);
+      case 'deleted':
+        return `Property '${newAncestry}' was removed`;
+      case 'added':
+        return `Property '${newAncestry}' was added with value: ${newValue}`;
+      case 'changed':
+        return `Property '${newAncestry}' was updated. From ${oldValue} to ${newValue}`;
+      case 'unchanged':
         return [];
+      default:
+        throw new Error(`Unknown type: '${type}'!`);
     }
   }).join('\n');
-  return iter(keys, '');
+  return iter(tree, '');
 };
 
 export default formatPlain;

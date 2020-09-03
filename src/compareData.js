@@ -5,19 +5,23 @@ const compareData = (before, after) => {
   const sortedKeys = _.sortBy(keys);
   return sortedKeys.map((key) => {
     if (!_.has(before, key)) {
-      return { [key]: { type: 'added', newValue: after[key] } };
+      return { key, type: 'added', newValue: after[key] };
     }
     if (!_.has(after, key)) {
-      return { [key]: { type: 'deleted', oldValue: before[key] } };
+      return { key, type: 'deleted', oldValue: before[key] };
     }
-    if (_.has(before, key) && _.has(after, key)) {
-      if (!_.isObject(before[key]) || !_.isObject(after[key])) {
-        const type = before[key] === after[key] ? 'unchanged' : 'changed';
-        return { [key]: { type, oldValue: before[key], newValue: after[key] } };
-      }
+    if (_.isObject(before[key]) && _.isObject(after[key])) {
       const children = compareData(before[key], after[key]);
-      return { [key]: { type: 'nested', children } };
+      return { key, type: 'nested', children };
     }
+    if (before[key] !== after[key]) {
+      return {
+        key, type: 'changed', oldValue: before[key], newValue: after[key],
+      };
+    }
+    return {
+      key, type: 'unchanged', oldValue: before[key], newValue: after[key],
+    };
   });
 };
 
